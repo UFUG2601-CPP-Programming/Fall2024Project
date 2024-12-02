@@ -26,6 +26,10 @@ struct Res{
                 return true;
             }
 
+            bool operator!=(const Line& other) const {
+                return !(*this == other);
+            }
+
             std::string toString() const {
                 std::string str;
                 // insert ',' between words except for the last word
@@ -40,6 +44,8 @@ struct Res{
         };
 
         std::vector<Line> lines;
+
+        Line title;
     };
 
     std::vector<Sentence> sentences;
@@ -118,7 +124,6 @@ SELECT Name, GPA FROM student WHERE GPA > 3.1;
 UPDATE student SET GPA = 3.8 WHERE ID = 1001;
 DELETE FROM student WHERE ID = 1000;
 SELECT * FROM student;
-USE DATABASE university_db;
 CREATE TABLE course_enrollment (
     StudentID INTEGER,
     Course TEXT
@@ -134,29 +139,35 @@ DROP TABLE student;)";
 }
 
 void initRefs() {
-    refs[0].str = R"(1|Alice Johnson|3.50|Computer Science
+    refs[0].str = R"(ID,Name,GPA,Major
+1|Alice Johnson|3.50|Computer Science
 2|Bob Smith|3.60|Electrical Engineering
 3|Catherine Lee|3.90|Mathematics
 4|Dave Brown|3.20|Physics
 5|Eva White|3.80|Chemistry
 ---
+CourseID,CourseName,Department
 101|Introduction to Computer Science|Computer Science
 102|Circuit Analysis|Electrical Engineering
 103|Linear Algebra|Mathematics
 104|Quantum Mechanics|Physics
 105|Organic Chemistry|Chemistry
 ---
+student.Name,enrollment.CourseID
 Alice Johnson|101
 Alice Johnson|103
 ---
+ID,Name,GPA,Major
 1|Alice Johnson|4.0|Computer Science
 ---
+student.Name,enrollment.CourseID
 Alice Johnson|101
 Alice Johnson|103
 Bob Smith|102
 Catherine Lee|103
 Eva White|105
 ---
+CourseID,CourseName,Department
 101|Introduction to Computer Science|Computer Science
 102|Circuit Analysis|Electrical Engineering
 103|Linear Algebra|Mathematics
@@ -164,18 +175,22 @@ Eva White|105
 ---
 )";
 
-    refs[1].str = R"(1000|Jay Chou|3.00|Microelectronics
+    refs[1].str = R"(ID,Name,GPA,Major
+1000|Jay Chou|3.00|Microelectronics
 1001|Taylor Swift|3.20|Data Science
 1002|Bob Dylan|3.50|Financial Technology
 ---
+Name,GPA
 Taylor Swift|3.20
 Bob Dylan|3.50
 ---
+ID,Name,GPA,Major
 1001|Taylor Swift|3.80|Data Science
 1002|Bob Dylan|3.50|Financial Technology
 ---
-Taylor Swift|Machine Learning
+student.Name,course_enrollment.Course
 Taylor Swift|Data Science
+Taylor Swift|Machine Learning
 Bob Dylan|Advanced Algorithms
 Bob Dylan|Financial Technology
 ---
@@ -199,6 +214,17 @@ void parseRefs(Res& r) {
         if (refLine.find("---") != std::string::npos) {
             r.sentences.push_back(s);
             s = Res::Sentence();
+            continue;
+        }
+
+        if (s.title.words.size() == 0) {
+            std::istringstream titleStream(refLine);
+            std::string titleWord;
+
+            while (std::getline(titleStream, titleWord, ',')) {
+                s.title.words.push_back(titleWord);
+            }
+
             continue;
         }
 
@@ -245,6 +271,17 @@ void parseOut(Res& o) {
         if (outLine.find("---") != std::string::npos) {
             o.sentences.push_back(s);
             s = Res::Sentence();
+            continue;
+        }
+
+        if (s.title.words.size() == 0) {
+            std::istringstream titleStream(outLine);
+            std::string titleWord;
+
+            while (std::getline(titleStream, titleWord, ',')) {
+                s.title.words.push_back(titleWord);
+            }
+
             continue;
         }
 
@@ -327,8 +364,17 @@ bool compareOutputWithFile(const int index, const std::string& outputFile) {
 
     for (auto i = 0; i < refs[index].sentences.size(); i++) {
         Res::Sentence matchedResSentence;
+        matchedResSentence.title = refs[index].sentences[i].title;
         Res::Sentence curOutSentence = out.sentences[i];
         Res::Sentence curRefSentence = refs[index].sentences[i];
+
+        if (refs[index].sentences[i].title != out.sentences[i].title) {
+            std::cerr << "\033[1;31m" << "Test case " << index << " Output " << i + 1 << " failed!" << "\033[0m" << std::endl;
+            std::cerr << "\033[1;31m" << "Title mismatch!" << "\033[0m" << std::endl;
+            std::cerr << "\033[1;32m" << "Expected: " << refs[index].sentences[i].title.toString() << "\033[0m" << std::endl;
+            std::cerr << "\033[1;31m" << "Got: " << out.sentences[i].title.toString() << "\033[0m" << std::endl;
+            return false;
+        }
 
         for (auto j = 0; j < refs[index].sentences[i].lines.size();) {
             // check if sentence in ref matches with the output
@@ -352,7 +398,7 @@ bool compareOutputWithFile(const int index, const std::string& outputFile) {
             }
         }
 
-        if (refs[index].sentences[i].lines.size() != 0 || out.sentences[i].lines.size() > 1) {
+        if (refs[index].sentences[i].lines.size() != 0 || out.sentences[i].lines.size() != 0) {
             std::cerr << "\033[1;31m" << "Test case " << index << " Output " << i + 1 << " failed!" << "\033[0m" << std::endl;
             
             for (auto& l : curRefSentence.lines) {
@@ -367,6 +413,7 @@ bool compareOutputWithFile(const int index, const std::string& outputFile) {
         } else {
             std::cout << "\033[1;32m" << "Test case " << index << " Output " << i + 1 << " passed!" << "\033[0m" << std::endl;
 
+            std::cout << "\033[1;34m" << "Matched: " << matchedResSentence.title.toString() << "\033[0m" << std::endl;
             for (auto& l : matchedResSentence.lines) {
                 std::cout << "\033[1;34m" << "Matched: " << l.toString() << "\033[0m" << std::endl;
             }
