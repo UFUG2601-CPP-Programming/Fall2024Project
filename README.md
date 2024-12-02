@@ -30,5 +30,5 @@ g++ unix.cpp -o unix
 
 2. run *unix* with your minidb executable binary file
 ```bash
-./unix ./unix /mnt/UFUG2601Project/build/minidb
+./unix /mnt/UFUG2601Project/build/minidb
 ```
