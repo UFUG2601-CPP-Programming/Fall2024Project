@@ -32,3 +32,7 @@ g++ unix.cpp -o unix
 ```bash
 ./unix /mnt/UFUG2601Project/build/minidb
 ```
+
+### Warning
+
+* You need to delete the previous output of the minidb program before running the AutoTest program.
