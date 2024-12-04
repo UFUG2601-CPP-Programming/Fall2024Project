@@ -55,8 +55,8 @@ struct Res{
     std::string str;
 };
 
-static std::vector<Res> refs(4);
-static std::vector<Res> outs(4);
+static std::vector<Res> refs(6);
+static std::vector<Res> outs(6);
 
 inline void initRefs() {
     refs[0].str = R"(ID,Name,GPA,Major
@@ -355,6 +355,69 @@ ID,Name,GPA,Major
 6|Elle Flores|1.00|Physics
 ---)";
 
+    refs[4].str = R"(EmployeeID,FirstName,LastName,DepartmentID,Age
+2|Jane|Doe|2|35
+4|Jim|Doe|2|56
+5|Jim|Eve|2|57
+---
+EmployeeID,FirstName,LastName,DepartmentID,Age
+1|John|Doe|1|24
+2|Jane|Doe|3|35
+3|Jim|Beam|3|23
+4|Jim|Doe|2|56
+5|Jim|Eve|2|57
+---
+EmployeeID,FirstName,LastName,DepartmentID,Age
+2|Jane|Doe|3|35
+3|Jim|Beam|3|23
+4|Jim|Doe|2|56
+5|Jim|Eve|2|57
+---
+EmployeeID,FirstName,LastName,DepartmentID,Age
+4|Jim|Doe|2|56
+5|Jim|Eve|2|57
+---
+Employees.FirstName,Employees.LastName,Departments.DepartmentName
+John|Doe|Human Resources
+Jane|Doe|Accounting
+Jim|Beam|Accounting
+Jim|Doe|IT
+Jim|Eve|IT
+---)";
+
+    refs[5].str = R"(Employees.FirstName,Employees.LastName,Employees.Age,Departments.DepartmentName
+John|Doe|24|Human Resources
+Jane|Doe|35|Accounting
+Jim|Beam|23|Accounting
+Jim|Doe|56|IT
+Jim|Eve|57|IT
+---
+EmployeeID,FirstName,LastName,DepartmentID,Age
+1|John|Doe|1|24
+2|Jane|Doe|3|35
+3|Jim|Beam|3|23
+6|Kim|Brown|1|29
+---
+Employees.FirstName,Employees.LastName,Employees.Age,Departments.DepartmentName
+John|Doe|24|Human Resources
+Jane|Doe|35|Human Resources
+Jim|Beam|23|Human Resources
+Jim|Doe|56|IT
+Jim|Eve|57|IT
+Kim|Brown|29|Human Resources
+Eve|Jax|40|IT
+---
+EmployeeID,FirstName,LastName,DepartmentID,Age
+4|Jim|Doe|2|56
+5|Jim|Eve|2|57
+7|Eve|Jax|2|40
+---
+Employees.FirstName,Employees.LastName,Employees.Age,Departments.DepartmentName
+John|Doe|24|Human Resources
+Jane|Doe|35|Human Resources
+Jim|Beam|23|Human Resources
+Kim|Brown|29|Human Resources
+---)";
 }
 
 inline void parseRefs(Res& ref) {
