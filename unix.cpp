@@ -4,6 +4,8 @@
 #include <cstdio>
 #include <memory>
 #include <vector>
+#include <utility>
+#include <map>
 
 #include "testcases.h"
 #include "references.h"
@@ -141,9 +143,43 @@ int main(int argc, char* argv[]) {
 
         size_t failed = 0;
 
+        // record the result of testcases
+        std::map<std::string, std::pair<size_t, size_t>> res;
+
+        res["Basic"] = std::make_pair(0, 2);
+        res["Simple"] = std::make_pair(0, 2);
+        res["Intermediate"] = std::make_pair(0, 2);
+        res["Complex"] = std::make_pair(0, 2);
+        res["Advanced"] = std::make_pair(0, 2);
+
         for (size_t i = 0; i < testcases.size(); i++) {
             if (!compareOutputWithFile(i, "Outputs/output" + std::to_string(i) + ".txt")) {
                 failed++;
+            } else {
+                switch (i) {
+                    case 0:
+                    case 1:
+                        res["Basic"].first++;
+                        break;
+                    case 2:
+                    case 3:
+                        res["Simple"].first++;
+                        break;
+                    case 4:
+                    case 5:
+                        res["Intermediate"].first++;
+                        break;
+                    case 6:
+                    case 7:
+                        res["Complex"].first++;
+                        break;
+                    case 8:
+                    case 9:
+                        res["Advanced"].first++;
+                        break;
+                    default:
+                        break;
+                }
             }
 
             std::cout << std::endl;
@@ -152,7 +188,17 @@ int main(int argc, char* argv[]) {
         if (failed == 0) {
             std::cout << "\033[1;34m" << "All test cases passed!" << "\033[0m" << std::endl;
         } else {
-            std::cerr << "\033[1;31m" << "Passed: " << testcases.size() - failed << "/" << testcases.size() << "\033[0m" << std::endl;
+            std::cerr << "\033[1;31m" << "Total Passed: " << testcases.size() - failed << "/" << testcases.size() << "\033[0m" << std::endl;
+
+            auto printRes = [](const std::string& name, const std::pair<size_t, size_t>& r) {
+                std::cerr << "\033[1;32m" << name << " Passed: " << r.first << "/" << r.second << "\033[0m" << std::endl;
+            };
+
+            printRes("Basic", res["Basic"]);
+            printRes("Simple", res["Simple"]);
+            printRes("Intermediate", res["Intermediate"]);
+            printRes("Complex", res["Complex"]);
+            printRes("Advanced", res["Advanced"]);
         }
     } catch (const std::exception& e) {
         std::cerr << "Error: " << e.what() << std::endl;
