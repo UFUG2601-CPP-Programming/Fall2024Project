@@ -1,11 +1,41 @@
-CREATE DATABASE UniversityDB;
+//
+// Created by chenzihang on 24-12-4.
+//
+
+#ifndef TESTCASES_H
+#define TESTCASES_H
+
+#include <vector>
+#include <string>
+
+static std::vector<std::string> testcases(2);
+
+inline void initTestCases() {
+    testcases[0] = R"(CREATE DATABASE test_university;
+USE DATABASE test_university;
+CREATE TABLE student (
+    ID INTEGER,
+    Name TEXT,
+    GPA FLOAT,
+    Major TEXT
+);
+SELECT * FROM student;
+INSERT INTO student VALUES (1, 'Alice Johnson', 3.5, 'Computer Science');
+INSERT INTO student VALUES (2, 'Bob Smith', 3.6, 'Electrical Engineering');
+INSERT INTO student VALUES (3, 'Catherine Lee', 3.9, 'Mathematics');
+INSERT INTO student VALUES (4, 'Dave Brown', 3.2, 'Physics');
+INSERT INTO student VALUES (5, 'Eva White', 3.8, 'Chemistry');
+SELECT * FROM student;)";
+
+        testcases[1] = R"(CREATE DATABASE UniversityDB;
 USE DATABASE UniversityDB;
 CREATE TABLE Students (
-    StudentID INTEGER,
+    StudentID INT,
     FirstName TEXT,
     LastName TEXT,
-    Age INTEGER
+    Age INT
 );
+
 INSERT INTO Students VALUES (0, 'Elle', 'Scott', 70);
 INSERT INTO Students VALUES (1, 'Elle', 'Torres', 53);
 INSERT INTO Students VALUES (2, 'Elle', 'Nguyen', 48);
@@ -1536,4 +1566,9 @@ CREATE TABLE TABLE253 (
 
 INSERT INTO TABLE252 VALUES (1, 'A');
 
-SELECT * FROM TABLE252;
+SELECT * FROM TABLE252;)";
+
+}
+
+
+#endif //TESTCASES_H
