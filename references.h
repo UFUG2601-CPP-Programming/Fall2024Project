@@ -55,8 +55,8 @@ struct Res{
     std::string str;
 };
 
-std::vector<Res> refs(2);
-std::vector<Res> outs(2);
+static std::vector<Res> refs(4);
+static std::vector<Res> outs(4);
 
 inline void initRefs() {
     refs[0].str = R"(ID,Name,GPA,Major
@@ -328,6 +328,31 @@ ID,Name,GPA,Major
 ---
 COLUMN1,COLUMN2
 1|A
+---)";
+
+    refs[2].str = R"(ID,Name,GPA,Major
+1|Alice Johnson|3.50|Computer Science
+2|Bob Smith|3.60|Electrical Engineering
+3|Catherine Lee|3.90|Mathematics
+4|Dave Brown|3.20|Physics
+5|Eva White|3.80|Chemistry
+---
+ID,Name,GPA,Major
+1|Alice Johnson|4.00|Computer Science
+---
+)";
+
+    refs[3].str =  R"(ID,Name,GPA,Major
+1|Alice Johnson|4.00|Computer Science
+2|Bob Smith|3.60|Electrical Engineering
+3|Catherine Lee|3.90|Mathematics
+4|Dave Brown|3.20|Physics
+5|Eva White|3.80|Chemistry
+6|Elle Flores|0.20|Physics
+7|Ina Rodriguez|3.50|Chemistry
+---
+ID,Name,GPA,Major
+6|Elle Flores|1.00|Physics
 ---)";
 
 }

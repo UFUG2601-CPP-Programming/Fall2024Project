@@ -1,0 +1,10 @@
+ID,Name,GPA,Major
+1|Alice Johnson|3.50|Computer Science
+2|Bob Smith|3.60|Electrical Engineering
+3|Catherine Lee|3.90|Mathematics
+4|Dave Brown|3.20|Physics
+5|Eva White|3.80|Chemistry
+---
+ID,Name,GPA,Major
+1|Alice Johnson|4.00|Computer Science
+---

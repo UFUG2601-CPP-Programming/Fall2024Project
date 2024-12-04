@@ -8,11 +8,11 @@
 #include <vector>
 #include <string>
 
-static std::vector<std::string> testcases(2);
+static std::vector<std::string> testcases(4);
 
 inline void initTestCases() {
-    testcases[0] = R"(CREATE DATABASE test_university;
-USE DATABASE test_university;
+    testcases[0] = R"(CREATE DATABASE test_university_0;
+USE DATABASE test_university_0;
 CREATE TABLE student (
     ID INTEGER,
     Name TEXT,
@@ -1567,6 +1567,30 @@ CREATE TABLE TABLE253 (
 INSERT INTO TABLE252 VALUES (1, 'A');
 
 SELECT * FROM TABLE252;)";
+
+    testcases[2] = R"(CREATE DATABASE test_university_2;
+USE DATABASE test_university_2;
+CREATE TABLE student (
+    ID INTEGER,
+    Name TEXT,
+    GPA FLOAT,
+    Major TEXT
+);
+INSERT INTO student VALUES (1, 'Alice Johnson', 3.5, 'Computer Science');
+INSERT INTO student VALUES (2, 'Bob Smith', 3.6, 'Electrical Engineering');
+INSERT INTO student VALUES (3, 'Catherine Lee', 3.9, 'Mathematics');
+INSERT INTO student VALUES (4, 'Dave Brown', 3.2, 'Physics');
+INSERT INTO student VALUES (5, 'Eva White', 3.8, 'Chemistry');
+SELECT * FROM student;
+UPDATE student SET GPA = 4.0 WHERE Name = 'Alice Johnson';
+SELECT * FROM student WHERE Name = 'Alice Johnson';)";
+
+    testcases[3] = R"(USE DATABASE test_university_2;
+INSERT INTO student VALUES (6, 'Elle Flores', 0.2, 'Physics');
+INSERT INTO student VALUES (7, 'Ina Rodriguez', 3.5, 'Chemistry');
+SELECT * FROM student;
+UPDATE student SET GPA = 1.0 WHERE Name = 'Elle Flores';
+SELECT * FROM student WHERE Name = 'Elle Flores';)";
 
 }
 
