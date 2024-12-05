@@ -6,6 +6,8 @@
 #include <cstdio>
 #include <memory>
 #include <vector>
+#include <utility>
+#include <map>
 #include <windows.h>
 
 #include "testcases.h"
@@ -29,7 +31,7 @@ void createTestFiles() {
 
     // create test files
     std::ofstream file;
-    for (int i = 0; i < testcases.size(); i++) {
+    for (size_t i = 0; i < testcases.size(); i++) {
         file.open("TestFiles/test" + std::to_string(i) + ".sql");
         file << testcases[i];
         file.close();
@@ -38,7 +40,7 @@ void createTestFiles() {
     initRefs();
 
     // create ref files
-    for (int i = 0; i < testcases.size(); i++) {
+    for (size_t i = 0; i < testcases.size(); i++) {
         parseRefs(refs[i]);
     }
 }
@@ -69,7 +71,7 @@ void exec(const std::string& arg0, const std::string& arg1, const std::string& a
     }
 
     // Wait until child process exits.
-    WaitForSingleObject(pi.hProcess, INFINITE);
+    WaitForSingleObject(pi.hProcess, 10000);
 
     // Close process and thread handles.
     CloseHandle(pi.hProcess);
@@ -85,7 +87,7 @@ std::string readFile(const std::string& filename) {
 }
 
 bool compareOutputWithFile(const int index, const std::string& outputFile) {
-    std::string output = readFile(outputFile);
+    const std::string output = readFile(outputFile);
 
     Res out;
     out.str = output;
@@ -128,7 +130,7 @@ bool compareOutputWithFile(const int index, const std::string& outputFile) {
             }
         }
 
-        if (refs[index].sentences[i].lines.size() != 0 || out.sentences[i].lines.size() != 0) {
+        if (!refs[index].sentences[i].lines.empty() || !out.sentences[i].lines.empty()) {
             std::cerr << "\033[1;31m" << "Test case " << index << " Output " << i + 1 << " failed!" << "\033[0m" << std::endl;
             
             for (auto& l : curRefSentence.lines) {
@@ -174,9 +176,43 @@ int main(int argc, char* argv[]) {
 
         size_t failed = 0;
 
+        // record the result of testcases
+        std::map<std::string, std::pair<size_t, size_t>> res;
+
+        res["Basic"] = std::make_pair(0, 2);
+        res["Simple"] = std::make_pair(0, 2);
+        res["Intermediate"] = std::make_pair(0, 2);
+        res["Complex"] = std::make_pair(0, 2);
+        res["Advanced"] = std::make_pair(0, 2);
+
         for (size_t i = 0; i < testcases.size(); i++) {
             if (!compareOutputWithFile(i, "Outputs/output" + std::to_string(i) + ".txt")) {
                 failed++;
+            } else {
+                switch (i) {
+                    case 0:
+                    case 1:
+                        res["Basic"].first++;
+                        break;
+                    case 2:
+                    case 3:
+                        res["Simple"].first++;
+                        break;
+                    case 4:
+                    case 5:
+                        res["Intermediate"].first++;
+                        break;
+                    case 6:
+                    case 7:
+                        res["Complex"].first++;
+                        break;
+                    case 8:
+                    case 9:
+                        res["Advanced"].first++;
+                        break;
+                    default:
+                        break;
+                }
             }
 
             std::cout << std::endl;
@@ -185,7 +221,17 @@ int main(int argc, char* argv[]) {
         if (failed == 0) {
             std::cout << "\033[1;34m" << "All test cases passed!" << "\033[0m" << std::endl;
         } else {
-            std::cerr << "\033[1;31m" << "Passed: " << testcases.size() - failed << "/" << testcases.size() << "\033[0m" << std::endl;
+            std::cerr << "\033[1;31m" << "Total Passed: " << testcases.size() - failed << "/" << testcases.size() << "\033[0m" << std::endl;
+
+            auto printRes = [](const std::string& name, const std::pair<size_t, size_t>& r) {
+                std::cerr << "\033[1;32m" << name << " Passed: " << r.first << "/" << r.second << "\033[0m" << std::endl;
+            };
+
+            printRes("Basic", res["Basic"]);
+            printRes("Simple", res["Simple"]);
+            printRes("Intermediate", res["Intermediate"]);
+            printRes("Complex", res["Complex"]);
+            printRes("Advanced", res["Advanced"]);
         }
     } catch (const std::exception& e) {
         std::cerr << "Error: " << e.what() << std::endl;
