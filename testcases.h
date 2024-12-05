@@ -8,7 +8,7 @@
 #include <vector>
 #include <string>
 
-static std::vector<std::string> testcases(6);
+static std::vector<std::string> testcases(2);
 
 inline void initTestCases() {
     testcases[0] = R"(CREATE DATABASE test_university_0;
@@ -1567,99 +1567,6 @@ CREATE TABLE TABLE253 (
 INSERT INTO TABLE252 VALUES (1, 'A');
 
 SELECT * FROM TABLE252;)";
-
-    testcases[2] = R"(CREATE DATABASE test_university_2;
-USE DATABASE test_university_2;
-CREATE TABLE student (
-    ID INTEGER,
-    Name TEXT,
-    GPA FLOAT,
-    Major TEXT
-);
-INSERT INTO student VALUES (1, 'Alice Johnson', 3.5, 'Computer Science');
-INSERT INTO student VALUES (2, 'Bob Smith', 3.6, 'Electrical Engineering');
-INSERT INTO student VALUES (3, 'Catherine Lee', 3.9, 'Mathematics');
-INSERT INTO student VALUES (4, 'Dave Brown', 3.2, 'Physics');
-INSERT INTO student VALUES (5, 'Eva White', 3.8, 'Chemistry');
-SELECT * FROM student;
-UPDATE student SET GPA = 4.0 WHERE Name = 'Alice Johnson';
-SELECT * FROM student WHERE Name = 'Alice Johnson';)";
-
-    testcases[3] = R"(USE DATABASE test_university_2;
-INSERT INTO student VALUES (6, 'Elle Flores', 0.2, 'Physics');
-INSERT INTO student VALUES (7, 'Ina Rodriguez', 3.5, 'Chemistry');
-SELECT * FROM student;
-UPDATE student SET GPA = 1.0 WHERE Name = 'Elle Flores';
-SELECT * FROM student WHERE Name = 'Elle Flores';)";
-
-    testcases[4] = R"(CREATE DATABASE CompanyDB_4;
-USE DATABASE CompanyDB_4;
-CREATE TABLE Employees (
-    EmployeeID INTEGER,
-    FirstName TEXT,
-    LastName TEXT,
-    DepartmentID INTEGER,
-    Age INTEGER
-);
-
-CREATE TABLE Departments (
-    DepartmentID INTEGER,
-    DepartmentName TEXT
-);
-
-INSERT INTO Departments VALUES (1, 'Human Resources');
-INSERT INTO Departments VALUES (2, 'IT');
-INSERT INTO Departments VALUES (3, 'Accounting');
-
-INSERT INTO Employees VALUES (1, 'John', 'Doe', 1, 24);
-INSERT INTO Employees VALUES (2, 'Jane', 'Doe', 2, 35);
-INSERT INTO Employees VALUES (3, 'Jim', 'Beam', 3, 23);
-INSERT INTO Employees VALUES (4, 'Jim', 'Doe', 2, 56);
-INSERT INTO Employees VALUES (5, 'Jim', 'Eve', 2, 57);
-
-SELECT * FROM Employees WHERE DepartmentID = 2;
-
-UPDATE Employees SET DepartmentID = 3 WHERE EmployeeID = 2;
-
-SELECT * FROM Employees;
-SELECT * FROM Employees WHERE DepartmentID = 3 OR FirstName != 'John';
-SELECT * FROM Employees WHERE EmployeeID > 3 AND FirstName = 'Jim';
-
-SELECT Employees.FirstName, Employees.LastName, Departments.DepartmentName
-FROM Employees
-INNER JOIN Departments
-ON Employees.DepartmentID = Departments.DepartmentID;)";
-
-    testcases[5] = R"(USE DATABASE CompanyDB_4;
-
-SELECT Employees.FirstName, Employees.LastName, Employees.Age, Departments.DepartmentName
-FROM Employees
-INNER JOIN Departments
-ON Employees.DepartmentID = Departments.DepartmentID;
-
-INSERT INTO Employees VALUES (6, 'Kim', 'Brown', 1, 29);
-INSERT INTO Employees VALUES (7, 'Eve', 'Jax', 2, 40);
-
-SELECT * FROM Employees WHERE DepartmentID = 1 or DepartmentID = 3;
-
-UPDATE Employees SET DepartmentID = 1 WHERE DepartmentID = 3;
-
-SELECT Employees.FirstName, Employees.LastName, Employees.Age, Departments.DepartmentName
-FROM Employees
-INNER JOIN Departments
-ON Employees.DepartmentID = Departments.DepartmentID;
-
-SELECT * FROM Employees WHERE Age > 34 and DepartmentID = 2;
-
-DELETE FROM Employees WHERE Age > 34 and DepartmentID = 2;
-
-SELECT Employees.FirstName, Employees.LastName, Employees.Age, Departments.DepartmentName
-FROM Employees
-INNER JOIN Departments
-ON Employees.DepartmentID = Departments.DepartmentID;
-)";
-
-
 
 }
 

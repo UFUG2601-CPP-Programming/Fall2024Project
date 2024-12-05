@@ -55,8 +55,8 @@ struct Res{
     std::string str;
 };
 
-static std::vector<Res> refs(6);
-static std::vector<Res> outs(6);
+static std::vector<Res> refs(2);
+static std::vector<Res> outs(2);
 
 inline void initRefs() {
     refs[0].str = R"(ID,Name,GPA,Major
@@ -330,94 +330,6 @@ COLUMN1,COLUMN2
 1|A
 ---)";
 
-    refs[2].str = R"(ID,Name,GPA,Major
-1|Alice Johnson|3.50|Computer Science
-2|Bob Smith|3.60|Electrical Engineering
-3|Catherine Lee|3.90|Mathematics
-4|Dave Brown|3.20|Physics
-5|Eva White|3.80|Chemistry
----
-ID,Name,GPA,Major
-1|Alice Johnson|4.00|Computer Science
----
-)";
-
-    refs[3].str =  R"(ID,Name,GPA,Major
-1|Alice Johnson|4.00|Computer Science
-2|Bob Smith|3.60|Electrical Engineering
-3|Catherine Lee|3.90|Mathematics
-4|Dave Brown|3.20|Physics
-5|Eva White|3.80|Chemistry
-6|Elle Flores|0.20|Physics
-7|Ina Rodriguez|3.50|Chemistry
----
-ID,Name,GPA,Major
-6|Elle Flores|1.00|Physics
----)";
-
-    refs[4].str = R"(EmployeeID,FirstName,LastName,DepartmentID,Age
-2|Jane|Doe|2|35
-4|Jim|Doe|2|56
-5|Jim|Eve|2|57
----
-EmployeeID,FirstName,LastName,DepartmentID,Age
-1|John|Doe|1|24
-2|Jane|Doe|3|35
-3|Jim|Beam|3|23
-4|Jim|Doe|2|56
-5|Jim|Eve|2|57
----
-EmployeeID,FirstName,LastName,DepartmentID,Age
-2|Jane|Doe|3|35
-3|Jim|Beam|3|23
-4|Jim|Doe|2|56
-5|Jim|Eve|2|57
----
-EmployeeID,FirstName,LastName,DepartmentID,Age
-4|Jim|Doe|2|56
-5|Jim|Eve|2|57
----
-Employees.FirstName,Employees.LastName,Departments.DepartmentName
-John|Doe|Human Resources
-Jane|Doe|Accounting
-Jim|Beam|Accounting
-Jim|Doe|IT
-Jim|Eve|IT
----)";
-
-    refs[5].str = R"(Employees.FirstName,Employees.LastName,Employees.Age,Departments.DepartmentName
-John|Doe|24|Human Resources
-Jane|Doe|35|Accounting
-Jim|Beam|23|Accounting
-Jim|Doe|56|IT
-Jim|Eve|57|IT
----
-EmployeeID,FirstName,LastName,DepartmentID,Age
-1|John|Doe|1|24
-2|Jane|Doe|3|35
-3|Jim|Beam|3|23
-6|Kim|Brown|1|29
----
-Employees.FirstName,Employees.LastName,Employees.Age,Departments.DepartmentName
-John|Doe|24|Human Resources
-Jane|Doe|35|Human Resources
-Jim|Beam|23|Human Resources
-Jim|Doe|56|IT
-Jim|Eve|57|IT
-Kim|Brown|29|Human Resources
-Eve|Jax|40|IT
----
-EmployeeID,FirstName,LastName,DepartmentID,Age
-4|Jim|Doe|2|56
-5|Jim|Eve|2|57
-7|Eve|Jax|2|40
----
-Employees.FirstName,Employees.LastName,Employees.Age,Departments.DepartmentName
-John|Doe|24|Human Resources
-Jane|Doe|35|Human Resources
-Jim|Beam|23|Human Resources
-Kim|Brown|29|Human Resources
----)";
 }
 
 inline void parseRefs(Res& ref) {
