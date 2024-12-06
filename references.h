@@ -55,8 +55,8 @@ struct Res{
     std::string str;
 };
 
-static std::vector<Res> refs(6);
-static std::vector<Res> outs(6);
+static std::vector<Res> refs(8);
+static std::vector<Res> outs(8);
 
 inline void initRefs() {
     refs[0].str = R"(ID,Name,GPA,Major
@@ -417,6 +417,77 @@ John|Doe|24|Human Resources
 Jane|Doe|35|Human Resources
 Jim|Beam|23|Human Resources
 Kim|Brown|29|Human Resources
+---)";
+
+    refs[6].str = R"(id,name,age,department_id
+1|John Doe|30|101
+2|Jane Smith|25|102
+3|Alice Johnson|28|103
+---
+id,name,age,department_id
+1|John Doe|30|101
+3|Alice Johnson|28|103
+---
+id,name,age,department_id
+3|Alice Johnson|28|103
+---
+id,name,age,department_id
+1|John Doe|30|102
+2|Jane Smith|25|102
+3|Alice Johnson|28|103
+---
+employees.name,departments.department_name
+John Doe|Finance
+Jane Smith|Finance
+Alice Johnson|IT
+---
+employees.name,departments.department_name
+Alice Johnson|IT
+---)";
+
+    refs[7].str = R"(id,name,age,department_id
+1|John Doe|30|102
+2|Jane Smith|25|102
+3|Alice Johnson|28|103
+4|Mike Brown|32|101
+5|Lisa Ray|27|102
+---
+id,name,age,department_id
+1|John Doe|30|102
+3|Alice Johnson|28|103
+4|Mike Brown|32|101
+5|Lisa Ray|27|102
+---
+id,name,age,department_id
+3|Alice Johnson|28|103
+---
+id,name,age,department_id
+1|John Doe|30|102
+2|Jane Smith|25|104
+3|Alice Johnson|28|103
+4|Mike Brown|32|101
+5|Lisa Ray|27|102
+---
+employees.name,departments.department_name
+John Doe|Finance
+Jane Smith|Marketing
+Alice Johnson|IT
+Mike Brown|Human Resources
+Lisa Ray|Finance
+---
+employees.name,departments.department_name
+Alice Johnson|IT
+---
+employees.name,employees.age,departments.department_name
+John Doe|30|Finance
+Alice Johnson|28|IT
+Mike Brown|32|Human Resources
+Lisa Ray|27|Finance
+---
+department_id,department_name
+101|Human Resources
+102|Finance
+103|IT
 ---)";
 }
 

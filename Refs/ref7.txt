@@ -1,0 +1,44 @@
+id,name,age,department_id
+1|John Doe|30|102
+2|Jane Smith|25|102
+3|Alice Johnson|28|103
+4|Mike Brown|32|101
+5|Lisa Ray|27|102
+---
+id,name,age,department_id
+1|John Doe|30|102
+3|Alice Johnson|28|103
+4|Mike Brown|32|101
+5|Lisa Ray|27|102
+---
+id,name,age,department_id
+3|Alice Johnson|28|103
+---
+id,name,age,department_id
+1|John Doe|30|102
+2|Jane Smith|25|104
+3|Alice Johnson|28|103
+4|Mike Brown|32|101
+5|Lisa Ray|27|102
+---
+employees.name,departments.department_name
+John Doe|Finance
+Jane Smith|Marketing
+Alice Johnson|IT
+Mike Brown|Human Resources
+Lisa Ray|Finance
+---
+employees.name,departments.department_name
+Alice Johnson|IT
+---
+employees.name,employees.age,departments.department_name
+John Doe|30|Finance
+Alice Johnson|28|IT
+Mike Brown|32|Human Resources
+Lisa Ray|27|Finance
+---
+department_id,department_name
+101|Human Resources
+102|Finance
+103|IT
+---

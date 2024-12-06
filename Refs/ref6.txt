@@ -1,0 +1,25 @@
+id,name,age,department_id
+1|John Doe|30|101
+2|Jane Smith|25|102
+3|Alice Johnson|28|103
+---
+id,name,age,department_id
+1|John Doe|30|101
+3|Alice Johnson|28|103
+---
+id,name,age,department_id
+3|Alice Johnson|28|103
+---
+id,name,age,department_id
+1|John Doe|30|102
+2|Jane Smith|25|102
+3|Alice Johnson|28|103
+---
+employees.name,departments.department_name
+John Doe|Finance
+Jane Smith|Finance
+Alice Johnson|IT
+---
+employees.name,departments.department_name
+Alice Johnson|IT
+---
