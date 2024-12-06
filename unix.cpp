@@ -64,11 +64,20 @@ bool compareOutputWithFile(const size_t index, const std::string& outputFile) {
     for (size_t i = 0; i < refs[index].sentences.size(); i++) {
         Res::Sentence matchedResSentence;
         matchedResSentence.title = refs[index].sentences[i].title;
-        Res::Sentence curOutSentence = out.sentences[i];
         Res::Sentence curRefSentence = refs[index].sentences[i];
+        Res::Sentence curOutSentence;
+
+        if (out.sentences.size() <= i) {
+            std::cerr << "\033[1;31m" << "Test case " << index << " Output " << i << " failed!" << "\033[0m" << std::endl;
+            std::cerr << "\033[1;31m" << "Output has less sentences than expected!" << "\033[0m" << std::endl;
+        
+            return false;
+        } else {
+            curOutSentence = out.sentences[i];
+        }
 
         if (refs[index].sentences[i].title != out.sentences[i].title) {
-            std::cerr << "\033[1;31m" << "Test case " << index << " Output " << i + 1 << " failed!" << "\033[0m" << std::endl;
+            std::cerr << "\033[1;31m" << "Test case " << index << " Output " << i << " failed!" << "\033[0m" << std::endl;
             std::cerr << "\033[1;31m" << "Title mismatch!" << "\033[0m" << std::endl;
             std::cerr << "\033[1;32m" << "Expected: " << refs[index].sentences[i].title.toString() << "\033[0m" << std::endl;
             std::cerr << "\033[1;31m" << "Got: " << out.sentences[i].title.toString() << "\033[0m" << std::endl;
@@ -98,7 +107,7 @@ bool compareOutputWithFile(const size_t index, const std::string& outputFile) {
         }
 
         if (!refs[index].sentences[i].lines.empty() || !out.sentences[i].lines.empty()) {
-            std::cerr << "\033[1;31m" << "Test case " << index << " Output " << i + 1 << " failed!" << "\033[0m" << std::endl;
+            std::cerr << "\033[1;31m" << "Test case " << index << " Output " << i << " failed!" << "\033[0m" << std::endl;
             
             for (auto& l : curRefSentence.lines) {
                 std::cout << "\033[1;32m" << "Expected: " << l.toString() << "\033[0m" << std::endl;
@@ -110,7 +119,7 @@ bool compareOutputWithFile(const size_t index, const std::string& outputFile) {
 
             return false;
         } else {
-            std::cout << "\033[1;32m" << "Test case " << index << " Output " << i + 1 << " passed!" << "\033[0m" << std::endl;
+            std::cout << "\033[1;32m" << "Test case " << index << " Output " << i << " passed!" << "\033[0m" << std::endl;
 
             std::cout << "\033[1;34m" << "Matched: " << matchedResSentence.title.toString() << "\033[0m" << std::endl;
             for (auto& l : matchedResSentence.lines) {
@@ -119,6 +128,12 @@ bool compareOutputWithFile(const size_t index, const std::string& outputFile) {
         }
 
         std::cout << std::endl;
+    }
+
+    if (refs[index].sentences.size() < out.sentences.size()) {
+        std::cerr << "\033[1;31m" << "Test case " << index << " Output failed!" << "\033[0m" << std::endl;
+        std::cerr << "\033[1;31m" << "Output has more sentences than expected!" << "\033[0m" << std::endl;
+        return false;
     }
 
     return true;
@@ -189,17 +204,18 @@ int main(int argc, char* argv[]) {
             std::cout << "\033[1;34m" << "All test cases passed!" << "\033[0m" << std::endl;
         } else {
             std::cerr << "\033[1;31m" << "Total Passed: " << testcases.size() - failed << "/" << testcases.size() << "\033[0m" << std::endl;
-
-            auto printRes = [](const std::string& name, const std::pair<size_t, size_t>& r) {
-                std::cerr << "\033[1;32m" << name << " Passed: " << r.first << "/" << r.second << "\033[0m" << std::endl;
-            };
-
-            printRes("Basic", res["Basic"]);
-            printRes("Simple", res["Simple"]);
-            printRes("Intermediate", res["Intermediate"]);
-            printRes("Complex", res["Complex"]);
-            printRes("Advanced", res["Advanced"]);
         }
+
+        auto printRes = [](const std::string& name, const std::pair<size_t, size_t>& r) {
+            std::cerr << "\033[1;32m" << name << " Passed: " << r.first << "/" << r.second << "\033[0m" << std::endl;
+        };
+
+        printRes("Basic", res["Basic"]);
+        printRes("Simple", res["Simple"]);
+        printRes("Intermediate", res["Intermediate"]);
+        printRes("Complex", res["Complex"]);
+        printRes("Advanced", res["Advanced"]);
+
     } catch (const std::exception& e) {
         std::cerr << "Error: " << e.what() << std::endl;
         return 1;
