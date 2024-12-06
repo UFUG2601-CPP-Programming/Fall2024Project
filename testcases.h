@@ -30,10 +30,10 @@ SELECT * FROM student;)";
         testcases[1] = R"(CREATE DATABASE UniversityDB;
 USE DATABASE UniversityDB;
 CREATE TABLE Students (
-    StudentID INT,
+    StudentID INTEGER,
     FirstName TEXT,
     LastName TEXT,
-    Age INT
+    Age INTEGER
 );
 
 INSERT INTO Students VALUES (0, 'Elle', 'Scott', 70);
