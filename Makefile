@@ -6,6 +6,9 @@ CXX = g++
 # Compiler flags
 CXXFLAGS = -Wall -std=c++11
 
+# Output directory
+OUTDIR = bin
+
 # Target executable
 TARGET = AutoTest
 
@@ -21,12 +24,12 @@ all: unix
 
 # Unix target
 unix: $(UNIX_SRC) $(HEADERS)
-	$(CXX) $(CXXFLAGS) -o $(TARGET) $(UNIX_SRC)
+	$(CXX) $(CXXFLAGS) -o $(OUTDIR)/$(TARGET) $(UNIX_SRC)
 
 # Windows target
 windows: $(WINDOWS_SRC) $(HEADERS)
-	$(CXX) $(CXXFLAGS) -o $(TARGET) $(WINDOWS_SRC)
+	$(CXX) $(CXXFLAGS) -o $(OUTDIR)/$(TARGET) $(WINDOWS_SRC)
 
 # Clean target
 clean:
-	rm -f $(TARGET)
+	rm -rf $(OUTDIR)
