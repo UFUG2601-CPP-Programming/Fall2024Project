@@ -338,12 +338,12 @@ COLUMN1,COLUMN2
 5|Eva White|3.80|Chemistry
 ---
 ID,Name,GPA,Major
-1|Alice Johnson|4.00|Computer Science
+1|Alice Johnson|3.70|Computer Science
 ---
 )";
 
     refs[3].str =  R"(ID,Name,GPA,Major
-1|Alice Johnson|4.00|Computer Science
+1|Alice Johnson|3.70|Computer Science
 2|Bob Smith|3.60|Electrical Engineering
 3|Catherine Lee|3.90|Mathematics
 4|Dave Brown|3.20|Physics
@@ -352,7 +352,7 @@ ID,Name,GPA,Major
 7|Ina Rodriguez|3.50|Chemistry
 ---
 ID,Name,GPA,Major
-6|Elle Flores|1.00|Physics
+6|Elle Flores|0.10|Physics
 ---)";
 
     refs[4].str = R"(EmployeeID,FirstName,LastName,DepartmentID,Age

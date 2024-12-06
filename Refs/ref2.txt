@@ -6,5 +6,5 @@ ID,Name,GPA,Major
 5|Eva White|3.80|Chemistry
 ---
 ID,Name,GPA,Major
-1|Alice Johnson|4.00|Computer Science
+1|Alice Johnson|3.70|Computer Science
 ---

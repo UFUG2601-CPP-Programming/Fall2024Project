@@ -32,4 +32,4 @@ windows: $(WINDOWS_SRC) $(HEADERS)
 
 # Clean target
 clean:
-	rm -rf $(OUTDIR)
+	rm -rf $(OUTDIR)/*

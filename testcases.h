@@ -1582,14 +1582,14 @@ INSERT INTO student VALUES (3, 'Catherine Lee', 3.9, 'Mathematics');
 INSERT INTO student VALUES (4, 'Dave Brown', 3.2, 'Physics');
 INSERT INTO student VALUES (5, 'Eva White', 3.8, 'Chemistry');
 SELECT * FROM student;
-UPDATE student SET GPA = 4.0 WHERE Name = 'Alice Johnson';
+UPDATE student SET GPA = GPA + 0.2 WHERE Name = 'Alice Johnson';
 SELECT * FROM student WHERE Name = 'Alice Johnson';)";
 
     testcases[3] = R"(USE DATABASE test_university_2;
 INSERT INTO student VALUES (6, 'Elle Flores', 0.2, 'Physics');
 INSERT INTO student VALUES (7, 'Ina Rodriguez', 3.5, 'Chemistry');
 SELECT * FROM student;
-UPDATE student SET GPA = 1.0 WHERE Name = 'Elle Flores';
+UPDATE student SET GPA = GPA - 0.1 WHERE Name = 'Elle Flores';
 SELECT * FROM student WHERE Name = 'Elle Flores';)";
 
     testcases[4] = R"(CREATE DATABASE CompanyDB_4;
