@@ -1,0 +1,29 @@
+id,name,age,department_id
+1|John Smith|30|1
+2|Jane Doe|25|2
+3|Alice Johnson|28|3
+---
+id,name,age,department_id
+1|John Smith|30|1
+3|Alice Johnson|28|3
+---
+id,name,age,department_id
+1|John Smith|30|2
+---
+id,name,age,department_id
+1|John Smith|30|2
+3|Alice Johnson|28|3
+---
+employees.name,departments.department_name
+John Smith|Finance
+Jane Doe|Finance
+Alice Johnson|IT
+---
+employees.name,departments.department_name
+Alice Johnson|IT
+---
+employees.name,departments.department_name,projects.project_name
+John Smith|Finance|Project Alpha
+Jane Doe|Finance|Project Beta
+Alice Johnson|IT|Project Gamma
+---

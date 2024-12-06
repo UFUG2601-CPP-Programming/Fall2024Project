@@ -8,7 +8,7 @@
 #include <vector>
 #include <string>
 
-static std::vector<std::string> testcases(8);
+static std::vector<std::string> testcases(10);
 
 inline void initTestCases() {
     testcases[0] = R"(CREATE DATABASE test_university_0;
@@ -1736,6 +1736,120 @@ UPDATE employees SET age = age + 1 WHERE department_id = 101 OR department_id = 
 DELETE FROM departments WHERE department_id = 104;
 
 SELECT * FROM departments;)";
+
+    testcases[8] = R"(
+CREATE DATABASE companyDB_8;
+
+USE DATABASE companyDB_8;
+
+CREATE TABLE employees (
+    id INTEGER,
+    name TEXT,
+    age INTEGER,
+    department_id INTEGER
+);
+
+CREATE TABLE departments (
+    department_id INTEGER,
+    department_name TEXT
+);
+
+CREATE TABLE projects (
+    project_id INTEGER,
+    project_name TEXT,
+    lead_id INTEGER
+);
+
+INSERT INTO employees VALUES (1, 'John Smith', 30, 1);
+INSERT INTO employees VALUES (2, 'Jane Doe', 25, 2);
+INSERT INTO employees VALUES (3, 'Alice Johnson', 28, 3);
+
+INSERT INTO departments VALUES (1, 'Human Resources');
+INSERT INTO departments VALUES (2, 'Finance');
+INSERT INTO departments VALUES (3, 'IT');
+
+INSERT INTO projects VALUES (101, 'Project Alpha', 1);
+INSERT INTO projects VALUES (102, 'Project Beta', 2);
+INSERT INTO projects VALUES (103, 'Project Gamma', 3);
+
+SELECT * FROM employees;
+
+SELECT * FROM employees WHERE age > 26;
+
+UPDATE employees SET department_id = 2 WHERE id = 1;
+
+SELECT * FROM employees WHERE age > 25 AND department_id = 2;
+SELECT * FROM employees WHERE age > 25 OR department_id = 3;
+
+SELECT employees.name, departments.department_name
+FROM employees
+INNER JOIN departments ON employees.department_id = departments.department_id;
+
+SELECT employees.name, departments.department_name
+FROM employees
+INNER JOIN departments ON employees.department_id = departments.department_id
+WHERE employees.age > 25 AND departments.department_name = 'IT';
+
+SELECT employees.name, departments.department_name, projects.project_name
+FROM employees
+INNER JOIN departments ON employees.department_id = departments.department_id
+INNER JOIN projects ON employees.id = projects.lead_id;)";
+
+    testcases[9] = R"(CREATE DATABASE libraryDB_9;
+
+USE DATABASE libraryDB_9;
+
+CREATE TABLE books (
+    book_id INTEGER,
+    title TEXT,
+    author_id INTEGER,
+    is_available INTEGER
+);
+
+CREATE TABLE authors (
+    author_id INTEGER,
+    author_name TEXT
+);
+
+CREATE TABLE loans (
+    loan_id INTEGER,
+    book_id INTEGER,
+    loan_date TEXT,
+    return_date TEXT,
+    is_returned INTEGER
+);
+
+INSERT INTO authors VALUES (1, 'George Orwell');
+INSERT INTO authors VALUES (2, 'Virginia Woolf');
+INSERT INTO authors VALUES (3, 'James Joyce');
+
+INSERT INTO books VALUES (101, '1984', 1, 1);
+INSERT INTO books VALUES (102, 'Mrs Dalloway', 2, 1);
+INSERT INTO books VALUES (103, 'Ulysses', 3, 0);
+
+INSERT INTO loans VALUES (201, 103, '2024-01-01', '2024-01-15', 0);
+INSERT INTO loans VALUES (202, 101, '2024-01-02', '2024-01-20', 0);
+INSERT INTO loans VALUES (203, 102, '2024-01-21', '2024-01-22', 1);
+INSERT INTO loans VALUES (202, 102, '2024-01-23', '2024-01-25', 0);
+
+SELECT * FROM books;
+
+SELECT * FROM books WHERE is_available = 1;
+
+UPDATE books SET is_available = 0 WHERE book_id = 102;
+
+SELECT books.title, authors.author_name FROM books
+INNER JOIN authors ON books.author_id = authors.author_id
+WHERE books.is_available = 1 AND authors.author_name = 'Virginia Woolf';
+
+SELECT books.title, authors.author_name
+FROM books
+INNER JOIN authors ON books.author_id = authors.author_id;
+
+SELECT books.title, loans.loan_date, loans.return_date
+FROM books
+INNER JOIN loans ON books.book_id = loans.book_id
+WHERE loans.is_returned = 0 AND (loans.return_date = '2024-01-15' OR loans.return_date = '2024-01-25');)";
 
 
 }

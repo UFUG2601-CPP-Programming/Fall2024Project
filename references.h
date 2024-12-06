@@ -55,8 +55,8 @@ struct Res{
     std::string str;
 };
 
-static std::vector<Res> refs(8);
-static std::vector<Res> outs(8);
+static std::vector<Res> refs(10);
+static std::vector<Res> outs(10);
 
 inline void initRefs() {
     refs[0].str = R"(ID,Name,GPA,Major
@@ -489,6 +489,58 @@ department_id,department_name
 102|Finance
 103|IT
 ---)";
+
+    refs[8].str = R"(id,name,age,department_id
+1|John Smith|30|1
+2|Jane Doe|25|2
+3|Alice Johnson|28|3
+---
+id,name,age,department_id
+1|John Smith|30|1
+3|Alice Johnson|28|3
+---
+id,name,age,department_id
+1|John Smith|30|2
+---
+id,name,age,department_id
+1|John Smith|30|2
+3|Alice Johnson|28|3
+---
+employees.name,departments.department_name
+John Smith|Finance
+Jane Doe|Finance
+Alice Johnson|IT
+---
+employees.name,departments.department_name
+Alice Johnson|IT
+---
+employees.name,departments.department_name,projects.project_name
+John Smith|Finance|Project Alpha
+Jane Doe|Finance|Project Beta
+Alice Johnson|IT|Project Gamma
+---)";
+
+    refs[9].str = R"(book_id,title,author_id,is_available
+101|1984|1|1
+102|Mrs Dalloway|2|1
+103|Ulysses|3|0
+---
+book_id,title,author_id,is_available
+101|1984|1|1
+102|Mrs Dalloway|2|1
+---
+books.title,authors.author_name
+---
+books.title,authors.author_name
+1984|George Orwell
+Mrs Dalloway|Virginia Woolf
+Ulysses|James Joyce
+---
+books.title,loans.loan_date,loans.return_date
+Ulysses|2024-01-01|2024-01-15
+Mrs Dalloway|2024-01-23|2024-01-25
+---
+)";
 }
 
 inline void parseRefs(Res& ref) {

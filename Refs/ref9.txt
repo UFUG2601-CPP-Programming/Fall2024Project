@@ -1,0 +1,20 @@
+book_id,title,author_id,is_available
+101|1984|1|1
+102|Mrs Dalloway|2|1
+103|Ulysses|3|0
+---
+book_id,title,author_id,is_available
+101|1984|1|1
+102|Mrs Dalloway|2|1
+---
+books.title,authors.author_name
+---
+books.title,authors.author_name
+1984|George Orwell
+Mrs Dalloway|Virginia Woolf
+Ulysses|James Joyce
+---
+books.title,loans.loan_date,loans.return_date
+Ulysses|2024-01-01|2024-01-15
+Mrs Dalloway|2024-01-23|2024-01-25
+---
