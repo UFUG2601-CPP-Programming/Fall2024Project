@@ -19,3 +19,7 @@ python run.py
 ```
 3. check the **result.txt** file in the **hw-src** folder. Note that some submissions may
 not be able to compile (Maybe they use Windows headers), so there are no **minidb** and **result.txt** files in the corresponding subfolders.
+
+### Output
+The output is like:
+![output](./picture/output.png)

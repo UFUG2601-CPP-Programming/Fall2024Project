@@ -2,6 +2,7 @@ import os
 import zipfile
 import shutil
 import subprocess
+import re
 
 """
   @brief: Unzips all .zip files in the specified folder to a folder with the same 
@@ -88,7 +89,7 @@ def make_all(folder_path='./hw-src'):
   for subdir in os.listdir(folder_path):
     subdir_path = os.path.join(folder_path, subdir)
     if os.path.isdir(subdir_path):
-      print(f"Running make in {subdir_path}")
+      print(f"run make in {subdir_path}")
       # Run make in the subdirectory, ignore the output
       subprocess.run(["make"], cwd=subdir_path, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
   print("Run all the make commands.")
@@ -105,18 +106,48 @@ def make_unix_links(folder_path='./hw-src'):
         os.symlink("../../unix", unix_link)
   print("Created all the unix links.")
 
+
+''' delete all the files and subfolders in the given folder except [*.cpp, *.c, *.h, *.hpp, makefile, unix, minidb]'''
+def clear_folder(folder_path: str):
+  allowed_extensions = {".cpp", ".h", ".hpp", ".c", ".o"}
+  allowed_filenames = {"makefile", "unix", "minidb"}
+  for file in os.listdir(folder_path):
+    path = os.path.join(folder_path, file)
+    if os.path.isfile(path):
+      if not file.endswith(tuple(allowed_extensions)) and file not in allowed_filenames:
+        os.remove(path)
+    elif os.path.isdir(path):
+      shutil.rmtree(path)
+
+''' parse the result.txt file and get the total number of passed tests'''
+def get_total_passed(file_path: str) -> int:
+  with open(file_path, 'r', encoding='utf-8', errors='ignore') as file:
+    lines = file.readlines()
+    for line in lines: 
+      # Check if the line indicates all test cases passed
+      if "All test cases passed!" in line:
+        return 10
+      match = re.search(r'Total Passed: (\d+)/\d+', line)
+      if match:
+        return int(match.group(1))
+
 def run_cmds(folder_path='./hw-src'):
   cmd = f"./unix ./minidb > result.txt 2>&1"
   cnt = 0
+  print(" ==== ===== ==== ")
   for file in os.listdir(folder_path):
     path = os.path.join(folder_path, file)
     if os.path.isdir(path):
       minidb_path = os.path.join(path, "minidb")
       if os.path.exists(minidb_path):
-        print(f"Running command in {path}")
+        clear_folder(path)
         subprocess.run(cmd, cwd=path, shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        result_path = os.path.join(path, "result.txt")
+        total_passed = get_total_passed(result_path)
+        if total_passed > 0:
+          print(f"Student {file} passed {total_passed} tests")
         cnt += 1
-  print(f"finish running {cnt} commands")
+  print(f"finish evaluating {cnt} students")
 
 def run(submissions_dir="./submissions", hw_src = "./hw-src"):
   # unzip all the submissions
@@ -132,6 +163,12 @@ def run(submissions_dir="./submissions", hw_src = "./hw-src"):
   # run all the commands
   run_cmds(hw_src)
 
+def test():
+  file_path = "./hw-src/shuochengwang_6464_289386_最后的项目/result.txt"
+  total_passed = get_total_passed(file_path)
+  print(total_passed)
+
 if __name__ == "__main__":
   submissions_dir="./submissions"
   run(submissions_dir)
+  # test()
