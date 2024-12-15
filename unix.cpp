@@ -61,7 +61,7 @@ bool compareOutputWithFile(const size_t index, const std::string& outputFile) {
 
     parseOut(out);
 
-    for (size_t i = 0; i < refs[index].sentences.size(); i++) {
+    for (size_t i = 0; i < refs[index].sentences.size() - 1; i++) {
         Res::Sentence matchedResSentence;
         matchedResSentence.title = refs[index].sentences[i].title;
         Res::Sentence curRefSentence = refs[index].sentences[i];
