@@ -8,23 +8,23 @@
 #include <vector>
 #include <string>
 
-static std::vector<std::string> testcases(10);
+static std::vector<std::string> testcases(12);
 
 inline void initTestCases() {
-    testcases[0] = R"(CREATE DATABASE test_university_0;
-USE DATABASE test_university_0;
+    testcases[0] = R"(CREATE DATABASE test_university;
+USE DATABASE test_university;
 CREATE TABLE student (
     ID INTEGER,
     Name TEXT,
-    GPA FLOAT,
+    GPA INTEGER,
     Major TEXT
 );
 SELECT * FROM student;
-INSERT INTO student VALUES (1, 'Alice Johnson', 3.5, 'Computer Science');
-INSERT INTO student VALUES (2, 'Bob Smith', 3.6, 'Electrical Engineering');
-INSERT INTO student VALUES (3, 'Catherine Lee', 3.9, 'Mathematics');
-INSERT INTO student VALUES (4, 'Dave Brown', 3.2, 'Physics');
-INSERT INTO student VALUES (5, 'Eva White', 3.8, 'Chemistry');
+INSERT INTO student VALUES (1, 'Alice Johnson', 85, 'Computer Science');
+INSERT INTO student VALUES (2, 'Bob Smith', 86, 'Electrical Engineering');
+INSERT INTO student VALUES (3, 'Catherine Lee', 89, 'Mathematics');
+INSERT INTO student VALUES (4, 'Dave Brown', 82, 'Physics');
+INSERT INTO student VALUES (5, 'Eva White', 88, 'Chemistry');
 SELECT * FROM student;)";
 
         testcases[1] = R"(CREATE DATABASE UniversityDB;
@@ -1573,23 +1573,35 @@ USE DATABASE test_university_2;
 CREATE TABLE student (
     ID INTEGER,
     Name TEXT,
-    GPA FLOAT,
+    GPA INTEGER,
     Major TEXT
 );
-INSERT INTO student VALUES (1, 'Alice Johnson', 3.5, 'Computer Science');
-INSERT INTO student VALUES (2, 'Bob Smith', 3.6, 'Electrical Engineering');
-INSERT INTO student VALUES (3, 'Catherine Lee', 3.9, 'Mathematics');
-INSERT INTO student VALUES (4, 'Dave Brown', 3.2, 'Physics');
-INSERT INTO student VALUES (5, 'Eva White', 3.8, 'Chemistry');
+INSERT INTO student VALUES (1, 'Alice Johnson', 85, 'Computer Science');
+INSERT INTO student VALUES (2, 'Bob Smith', 86, 'Electrical Engineering');
+INSERT INTO student VALUES (3, 'Catherine Lee', 89, 'Mathematics');
+INSERT INTO student VALUES (4, 'Dave Brown', 82, 'Physics');
+INSERT INTO student VALUES (5, 'Eva White', 88, 'Chemistry');
 SELECT * FROM student;
-UPDATE student SET GPA = GPA + 0.2 WHERE Name = 'Alice Johnson';
+UPDATE student SET GPA = GPA + 2 WHERE Name = 'Alice Johnson';
 SELECT * FROM student WHERE Name = 'Alice Johnson';)";
 
-    testcases[3] = R"(USE DATABASE test_university_2;
-INSERT INTO student VALUES (6, 'Elle Flores', 0.2, 'Physics');
-INSERT INTO student VALUES (7, 'Ina Rodriguez', 3.5, 'Chemistry');
+    testcases[3] = R"(CREATE DATABASE test_university_3;
+USE DATABASE test_university_3;
+CREATE TABLE student (
+    ID INTEGER,
+    Name TEXT,
+    GPA INTEGER,
+    Major TEXT
+);
+INSERT INTO student VALUES (1, 'Alice Johnson', 85, 'Computer Science');
+INSERT INTO student VALUES (2, 'Bob Smith', 86, 'Electrical Engineering');
+INSERT INTO student VALUES (3, 'Catherine Lee', 89, 'Mathematics');
+INSERT INTO student VALUES (4, 'Dave Brown', 82, 'Physics');
+INSERT INTO student VALUES (5, 'Eva White', 88, 'Chemistry');
+INSERT INTO student VALUES (6, 'Elle Flores', 82, 'Physics');
+INSERT INTO student VALUES (7, 'Ina Rodriguez', 85, 'Chemistry');
 SELECT * FROM student;
-UPDATE student SET GPA = GPA - 0.1 WHERE Name = 'Elle Flores';
+UPDATE student SET GPA = GPA - 1 WHERE Name = 'Elle Flores';
 SELECT * FROM student WHERE Name = 'Elle Flores';)";
 
     testcases[4] = R"(CREATE DATABASE CompanyDB_4;
@@ -1630,7 +1642,30 @@ FROM Employees
 INNER JOIN Departments
 ON Employees.DepartmentID = Departments.DepartmentID;)";
 
-    testcases[5] = R"(USE DATABASE CompanyDB_4;
+    testcases[5] = R"(CREATE DATABASE CompanyDB_5;
+USE DATABASE CompanyDB_5;
+CREATE TABLE Employees (
+    EmployeeID INTEGER,
+    FirstName TEXT,
+    LastName TEXT,
+    DepartmentID INTEGER,
+    Age INTEGER
+);
+
+CREATE TABLE Departments (
+    DepartmentID INTEGER,
+    DepartmentName TEXT
+);
+
+INSERT INTO Departments VALUES (1, 'Human Resources');
+INSERT INTO Departments VALUES (2, 'IT');
+INSERT INTO Departments VALUES (3, 'Accounting');
+
+INSERT INTO Employees VALUES (1, 'John', 'Doe', 1, 24);
+INSERT INTO Employees VALUES (2, 'Jane', 'Doe', 3, 35);
+INSERT INTO Employees VALUES (3, 'Jim', 'Beam', 3, 23);
+INSERT INTO Employees VALUES (4, 'Jim', 'Doe', 2, 56);
+INSERT INTO Employees VALUES (5, 'Jim', 'Eve', 2, 57);
 
 SELECT Employees.FirstName, Employees.LastName, Employees.Age, Departments.DepartmentName
 FROM Employees
@@ -1701,7 +1736,28 @@ INNER JOIN departments ON employees.department_id = departments.department_id
 WHERE employees.age > 25 AND departments.department_name = 'IT';)";
 
 
-    testcases[7] = R"(USE DATABASE CompanyDB_6;
+    testcases[7] = R"(CREATE DATABASE CompanyDB_7;
+USE DATABASE CompanyDB_7;
+
+CREATE TABLE employees (
+    id INTEGER,
+    name TEXT,
+    age INTEGER,
+    department_id INTEGER
+);
+
+CREATE TABLE departments (
+    department_id INTEGER,
+    department_name TEXT
+);
+
+INSERT INTO employees VALUES (1, 'John Doe', 30, 102);
+INSERT INTO employees VALUES (2, 'Jane Smith', 25, 102);
+INSERT INTO employees VALUES (3, 'Alice Johnson', 28, 103);
+
+INSERT INTO departments VALUES (101, 'Human Resources');
+INSERT INTO departments VALUES (102, 'Finance');
+INSERT INTO departments  VALUES (103, 'IT');
 
 INSERT INTO employees VALUES (4, 'Mike Brown', 32, 101);
 INSERT INTO employees VALUES (5, 'Lisa Ray', 27, 102);
@@ -1851,7 +1907,49 @@ FROM books
 INNER JOIN loans ON books.book_id = loans.book_id
 WHERE loans.is_returned = 0 AND (loans.return_date = '2024-01-15' OR loans.return_date = '2024-01-25');)";
 
+    testcases[10] = R"(CREATE DATABASE test_university_10;
+USE DATABASE test_university_10;
+CREATE TABLE student (
+    ID INTEGER,
+    Name TEXT,
+    GPA FLOAT,
+    Major TEXT
+);
+SELECT * FROM student;
+INSERT INTO student VALUES (1, 'Alice Johnson', 3.5, 'Computer Science');
+INSERT INTO student VALUES (2, 'Bob Smith', 3.6, 'Electrical Engineering');
+INSERT INTO student VALUES (3, 'Catherine Lee', 3.9, 'Mathematics');
+INSERT INTO student VALUES (4, 'Dave Brown', 3.2, 'Physics');
+INSERT INTO student VALUES (5, 'Eva White', 3.8, 'Chemistry');
+SELECT * FROM student;)";
 
+    testcases[11] = R"(USE DATABASE CompanyDB_4;
+
+SELECT Employees.FirstName, Employees.LastName, Employees.Age, Departments.DepartmentName
+FROM Employees
+INNER JOIN Departments
+ON Employees.DepartmentID = Departments.DepartmentID;
+
+INSERT INTO Employees VALUES (6, 'Kim', 'Brown', 1, 29);
+INSERT INTO Employees VALUES (7, 'Eve', 'Jax', 2, 40);
+
+SELECT * FROM Employees WHERE DepartmentID = 1 OR DepartmentID = 3;
+
+UPDATE Employees SET DepartmentID = 1 WHERE DepartmentID = 3;
+
+SELECT Employees.FirstName, Employees.LastName, Employees.Age, Departments.DepartmentName
+FROM Employees
+INNER JOIN Departments
+ON Employees.DepartmentID = Departments.DepartmentID;
+
+SELECT * FROM Employees WHERE Age > 34 AND DepartmentID = 2;
+
+DELETE FROM Employees WHERE Age > 34 AND DepartmentID = 2;
+
+SELECT Employees.FirstName, Employees.LastName, Employees.Age, Departments.DepartmentName
+FROM Employees
+INNER JOIN Departments
+ON Employees.DepartmentID = Departments.DepartmentID;)";
 }
 
 

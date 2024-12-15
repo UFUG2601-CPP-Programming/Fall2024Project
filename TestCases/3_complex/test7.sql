@@ -1,4 +1,25 @@
-USE DATABASE CompanyDB_6;
+CREATE DATABASE CompanyDB_7;
+USE DATABASE CompanyDB_7;
+
+CREATE TABLE employees (
+    id INTEGER,
+    name TEXT,
+    age INTEGER,
+    department_id INTEGER
+);
+
+CREATE TABLE departments (
+    department_id INTEGER,
+    department_name TEXT
+);
+
+INSERT INTO employees VALUES (1, 'John Doe', 30, 102);
+INSERT INTO employees VALUES (2, 'Jane Smith', 25, 102);
+INSERT INTO employees VALUES (3, 'Alice Johnson', 28, 103);
+
+INSERT INTO departments VALUES (101, 'Human Resources');
+INSERT INTO departments VALUES (102, 'Finance');
+INSERT INTO departments  VALUES (103, 'IT');
 
 INSERT INTO employees VALUES (4, 'Mike Brown', 32, 101);
 INSERT INTO employees VALUES (5, 'Lisa Ray', 27, 102);
