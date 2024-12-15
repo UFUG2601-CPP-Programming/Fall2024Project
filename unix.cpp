@@ -166,6 +166,8 @@ int main(int argc, char* argv[]) {
         res["Intermediate"] = std::make_pair(0, 2);
         res["Complex"] = std::make_pair(0, 2);
         res["Advanced"] = std::make_pair(0, 2);
+        res["Precision"] = std::make_pair(0, 1);
+        res["On-disk"] = std::make_pair(0, 1);
 
         for (size_t i = 0; i < testcases.size(); i++) {
             if (!compareOutputWithFile(i, "Outputs/output" + std::to_string(i) + ".txt")) {
@@ -192,6 +194,12 @@ int main(int argc, char* argv[]) {
                     case 9:
                         res["Advanced"].first++;
                         break;
+                    case 10:
+                        res["Precision"].first++;
+                        break;
+                    case 11:
+                        res["On-disk"].first++;
+                        break;
                     default:
                         break;
                 }
@@ -215,6 +223,8 @@ int main(int argc, char* argv[]) {
         printRes("Intermediate", res["Intermediate"]);
         printRes("Complex", res["Complex"]);
         printRes("Advanced", res["Advanced"]);
+        printRes("Precision", res["Precision"]);
+        printRes("On-disk", res["On-disk"]);
 
     } catch (const std::exception& e) {
         std::cerr << "Error: " << e.what() << std::endl;

@@ -1,0 +1,9 @@
+ID,Name,GPA,Major
+---
+ID,Name,GPA,Major
+1|Alice Johnson|85|Computer Science
+2|Bob Smith|86|Electrical Engineering
+3|Catherine Lee|89|Mathematics
+4|Dave Brown|82|Physics
+5|Eva White|88|Chemistry
+---

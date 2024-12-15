@@ -6,6 +6,12 @@ AutoTest is a program that automatically tests the minidb program. It will run t
 
 ![AutoTest Example](Figure/output.png)
 
+### Test Cases
+* For the functional test, there are five kinds of test cases: Basic, Simple, Intermediate,
+Complex and Advanced, each with two test cases.  
+* For the format test, there are two test cases in the 5_format folder. test10 is for the 2 decimals of
+the float elements. And test11 is to test if users can save the database on the disk.
+
 ## Usage
 
 ### Windows
