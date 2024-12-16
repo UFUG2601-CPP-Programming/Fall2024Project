@@ -15,6 +15,7 @@ TARGET = AutoTest
 # Source files
 UNIX_SRC = unix.cpp
 WINDOWS_SRC = windows.cpp
+# MAC_SRC = mac.cpp
 
 # Header files
 HEADERS = testcases.h
@@ -29,6 +30,10 @@ unix: $(UNIX_SRC) $(HEADERS)
 # Windows target
 windows: $(WINDOWS_SRC) $(HEADERS)
 	$(CXX) $(CXXFLAGS) -o $(OUTDIR)/$(TARGET) $(WINDOWS_SRC)
+
+# # Mac target
+# mac: $(MAC_SRC) $(HEADERS)
+# 	$(CXX) $(CXXFLAGS) -o $(OUTDIR)/$(TARGET) $(MAC_SRC)
 
 # Clean target
 clean:
